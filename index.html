@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGBS Law of Contract Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #0f172a; /* Slate 900 */
+        }
+
+        /* Deep Emerald Accent */
+        .accent-bg { background-color: #047857; } /* Emerald 700 */
+        .accent-text { color: #047857; }
+        .accent-border { border-color: #047857; }
+        .hover-accent-bg:hover { background-color: #064e3b; } /* Emerald 900 */
+
+        /* Smooth Transitions */
+        .card-enter {
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUpFade {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .option-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .option-btn:hover:not(:disabled) {
+            transform: translateX(4px);
+            background-color: #ecfdf5; /* Emerald 50 */
+            border-color: #047857;
+        }
+
+        /* Circular Progress Animation */
+        .progress-ring__circle {
+            transition: stroke-dashoffset 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        /* Toast Animation */
+        .toast-enter {
+            animation: toastSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes toastSlide {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Modal Backdrop */
+        .backdrop-blur {
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Minimal Header -->
+    <header class="fixed top-0 w-full bg-white/90 backdrop-blur border-b border-slate-200 z-40">
+        <div class="max-w-3xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex flex-col leading-tight">
+                <span class="text-xs font-bold tracking-widest text-slate-400 uppercase">University of Ghana</span>
+                <span class="text-lg font-bold accent-text">Law of Contract</span>
+            </div>
+            
+            <!-- Mini Progress Pie (Top Right) -->
+            <div id="mini-progress-container" class="hidden flex items-center gap-3">
+                <div class="text-right">
+                    <div class="text-xs text-slate-400 font-medium">Score</div>
+                    <div class="font-bold text-slate-800"><span id="live-score">0</span></div>
+                </div>
+                <div class="relative w-8 h-8">
+                    <svg class="w-full h-full" viewBox="0 0 100 100">
+                        <circle class="text-slate-200 stroke-current" stroke-width="10" cx="50" cy="50" r="40" fill="transparent"></circle>
+                        <circle id="mini-progress-circle" class="accent-text stroke-current progress-ring__circle" stroke-width="10" stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent" stroke-dasharray="251.2" stroke-dashoffset="251.2"></circle>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow flex flex-col items-center justify-center p-6 pt-24 w-full max-w-3xl mx-auto z-10">
+
+        <!-- Motivational Toast (Fixed Position) -->
+        <div id="motivation-toast" class="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl z-50 hidden flex items-center gap-3">
+            <span class="text-xl">⚖️</span>
+            <span id="motivation-text" class="font-medium text-sm">Justice prevails!</span>
+        </div>
+
+        <!-- 1. Start Screen -->
+        <div id="start-screen" class="w-full card-enter text-center">
+            <div class="mb-10">
+                <div class="w-24 h-24 accent-bg rounded-full flex items-center justify-center mx-auto mb-6 shadow-xl shadow-emerald-900/20">
+                    <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path></svg>
+                </div>
+                <h1 class="text-4xl font-bold text-slate-900 mb-3 tracking-tight">Contract Law Mastery</h1>
+                <p class="text-slate-500 text-lg">Principles of Enforceable Agreements</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">60</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Questions</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">Cases</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Key Precedents</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm">
+                    <div class="accent-text font-bold text-xl mb-1">Theory</div>
+                    <div class="text-xs text-slate-400 uppercase tracking-wide">Legal Doctrines</div>
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full md:w-auto px-12 py-4 accent-bg hover-accent-bg text-white font-semibold rounded-lg shadow-lg shadow-emerald-900/20 transition-all transform hover:-translate-y-1">
+                Start Assessment
+            </button>
+        </div>
+
+        <!-- 2. Quiz Interface -->
+        <div id="quiz-screen" class="hidden w-full">
+            <!-- Question Header -->
+            <div class="mb-8 flex justify-between items-end border-b border-slate-200 pb-4">
+                <div>
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">Question</span>
+                    <span class="text-3xl font-bold text-slate-800"><span id="current-q-num">1</span><span class="text-lg text-slate-400 font-normal">/60</span></span>
+                </div>
+                <div id="topic-badge" class="px-3 py-1 bg-emerald-50 accent-text text-xs font-bold uppercase tracking-wide rounded-md">
+                    Intro
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="question-card" class="card-enter">
+                <h2 id="question-text" class="text-2xl font-medium text-slate-800 mb-8 leading-snug">
+                    Loading question...
+                </h2>
+
+                <!-- Options -->
+                <div id="options-container" class="space-y-3 mb-8">
+                    <!-- Buttons injected here -->
+                </div>
+
+                <!-- Feedback Section (Slides down) -->
+                <div id="feedback-area" class="hidden bg-slate-50 rounded-lg p-6 border-l-4 border-slate-200">
+                    <div class="flex items-start gap-4">
+                        <div id="feedback-icon" class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mt-1">
+                            <!-- Icon -->
+                        </div>
+                        <div class="flex-grow">
+                            <h3 id="feedback-title" class="font-bold text-lg mb-1">Correct</h3>
+                            <p id="feedback-explanation" class="text-slate-600 text-sm leading-relaxed">Explanation text...</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex justify-end">
+                        <button onclick="nextQuestion()" class="accent-bg text-white px-6 py-2 rounded-md font-medium text-sm hover-accent-bg transition shadow-md">
+                            Continue
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Results Screen -->
+        <div id="result-screen" class="hidden w-full text-center card-enter">
+            <h2 class="text-3xl font-bold text-slate-900 mb-2">Quiz Complete</h2>
+            <p class="text-slate-500 mb-10">Here is your legal standing</p>
+
+            <div class="bg-white rounded-2xl shadow-xl border border-slate-100 p-8 mb-10">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-10">
+                    <!-- Final Score Chart -->
+                    <div class="relative w-48 h-48">
+                        <svg class="w-full h-full transform -rotate-90">
+                            <circle class="text-slate-100" stroke-width="12" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                            <circle id="final-score-circle" class="accent-text" stroke-width="12" stroke-dasharray="439.8" stroke-dashoffset="439.8" stroke-linecap="round" stroke="currentColor" fill="transparent" r="70" cx="96" cy="96" />
+                        </svg>
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <span id="final-percentage" class="text-4xl font-bold text-slate-900 block">0%</span>
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-wide">Accuracy</span>
+                        </div>
+                    </div>
+
+                    <div class="text-left space-y-4 w-full md:w-auto">
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Correct Answers</span>
+                            <span id="final-correct" class="font-bold text-green-600 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8 border-b border-slate-50 pb-2">
+                            <span class="text-sm text-slate-500">Incorrect Answers</span>
+                            <span id="final-wrong" class="font-bold text-red-500 text-xl">0</span>
+                        </div>
+                        <div class="flex items-center justify-between gap-8">
+                            <span class="text-sm text-slate-500">Total Score</span>
+                            <span id="final-total" class="font-bold text-slate-900 text-xl">60</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Review Section Toggle -->
+            <div id="review-container" class="hidden text-left mb-10">
+                <h3 class="font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2">Review Incorrect Answers</h3>
+                <div id="review-list" class="space-y-4">
+                    <!-- Wrong answers injected here -->
+                </div>
+            </div>
+
+            <div class="flex gap-4 justify-center">
+                <button onclick="toggleReview()" id="review-btn" class="hidden px-8 py-3 bg-white border border-slate-200 text-slate-700 font-medium rounded-lg hover:bg-slate-50 hover:border-slate-300 transition">
+                    Review Mistakes
+                </button>
+                <button onclick="location.reload()" class="px-8 py-3 accent-bg text-white font-medium rounded-lg hover-accent-bg transition shadow-lg shadow-emerald-900/20">
+                    Retake Quiz
+                </button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Milestone Modal (Every 10 questions) -->
+    <div id="milestone-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-sm w-full mx-4 transform scale-95 transition-transform duration-300" id="milestone-content">
+            <div class="text-center">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">Verdict So Far</h3>
+                <p class="text-slate-500 text-sm mb-6">You've adjudicated <span id="milestone-count">0</span> questions.</p>
+                
+                <div class="relative w-32 h-32 mx-auto mb-6">
+                    <svg class="w-full h-full transform -rotate-90">
+                        <circle class="text-slate-100" stroke-width="8" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                        <circle id="milestone-circle" class="accent-text transition-all duration-1000 ease-out" stroke-width="8" stroke-dasharray="364" stroke-dashoffset="364" stroke-linecap="round" stroke="currentColor" fill="transparent" r="58" cx="64" cy="64" />
+                    </svg>
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        <span id="milestone-percent" class="text-2xl font-bold text-slate-800">0%</span>
+                    </div>
+                </div>
+
+                <p id="milestone-msg" class="text-sm font-medium accent-text mb-6">You're on the right side of the law!</p>
+
+                <button onclick="closeMilestone()" class="w-full py-3 accent-bg text-white rounded-lg font-medium hover-accent-bg transition">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Questions Data ---
+        // Sourced from Law of Contract PPTX
+        const questions = [
+            // Definitions & Intro
+            {
+                q: "A Contract is defined as a promise or set of promises for the breach of which the law gives a __________.",
+                options: ["Punishment", "Fine", "Remedy", "Sentence"],
+                answer: 2,
+                topic: "Definition",
+                explanation: "The American Restatement (Second) of Contracts defines it as a promise for the breach of which the law gives a remedy."
+            },
+            {
+                q: "Which doctrine recognizes the liberty of people to enter into Agreements without interference?",
+                options: ["Sanctity of Contract", "Freedom of Contract", "Privity of Contract", "Doctrine of Estoppel"],
+                answer: 1,
+                topic: "Doctrines",
+                explanation: "Freedom of Contract is the doctrine that individuals are the best judges of their own interests and should be free to contract."
+            },
+            {
+                q: "The Doctrine of Sanctity of Contract emphasizes that:",
+                options: ["Agreements must be written", "Obligations agreed upon must be adhered to", "Contracts are sacred religious texts", "Courts cannot interfere"],
+                answer: 1,
+                topic: "Doctrines",
+                explanation: "Sanctity of Contract means parties are bound by the obligations they have voluntarily agreed to perform."
+            },
+            {
+                q: "Which of the following is NOT a source of the Law of Contract in Ghana?",
+                options: ["English Law of Contract", "The Quran", "Contracts Act, 1960", "Common Law Principles"],
+                answer: 1,
+                topic: "Sources",
+                explanation: "Religious texts like the Quran are not formal sources of the secular Law of Contract in Ghana."
+            },
+            {
+                q: "Which element is NOT required for a valid contract?",
+                options: ["Consideration", "Capacity", "Writing", "Intention to Create Legal Relations"],
+                answer: 2,
+                topic: "Elements",
+                explanation: "A contract can be oral, written, or implied. Writing is not a general requirement for validity unless specified by statute."
+            },
+            // Offer
+            {
+                q: "An offer must be __________ to the offeree to be valid.",
+                options: ["Written", "Communicated", "Mailed", "Sold"],
+                answer: 1,
+                topic: "Offer",
+                explanation: "An offer is not effective until it is communicated to the person to whom it is made."
+            },
+            {
+                q: "An offer made to the whole world is called a:",
+                options: ["Specific Offer", "General Offer", "Universal Offer", "Public Offer"],
+                answer: 1,
+                topic: "Offer",
+                explanation: "A General Offer (like in Carlill v Carbolic Smoke Ball Co.) is made to the world at large."
+            },
+            {
+                q: "Which case established that an advertisement can be a general offer?",
+                options: ["Hyde v Wrench", "Carlill v Carbolic Smoke Ball Co.", "Fisher v Bell", "Adams v Lindsell"],
+                answer: 1,
+                topic: "Offer",
+                explanation: "Carlill v Carbolic Smoke Ball Co. held that an advertisement with a reward for performance is a binding general offer."
+            },
+            {
+                q: "A display of goods in a shop window is an:",
+                options: ["Offer", "Invitation to Treat", "Acceptance", "Agreement"],
+                answer: 1,
+                topic: "Offer",
+                explanation: "Fisher v Bell established that displaying goods is an Invitation to Treat, soliciting offers from customers."
+            },
+            {
+                q: "An offer can be revoked at any time before:",
+                options: ["Consideration", "Rejection", "Acceptance", "Performance"],
+                answer: 2,
+                topic: "Offer",
+                explanation: "Dickinson v Dodds: An offer can be revoked at any time before it is accepted by the offeree."
+            },
+            {
+                q: "A counter-offer has the effect of:",
+                options: ["Accepting the offer", "Clarifying the offer", "Killing/Rejecting the original offer", "Holding the offer open"],
+                answer: 2,
+                topic: "Offer",
+                explanation: "Hyde v Wrench: A counter-offer destroys the original offer, making it incapable of being accepted later."
+            },
+            // Acceptance
+            {
+                q: "Acceptance must be:",
+                options: ["Conditional", "Final and Unqualified", "Tentative", "Negotiable"],
+                answer: 1,
+                topic: "Acceptance",
+                explanation: "Acceptance must mirror the offer exactly; any qualification makes it a counter-offer."
+            },
+            {
+                q: "The Postal Rule states that acceptance is effective when:",
+                options: ["The letter is received", "The letter is posted", "The letter is written", "The offeror reads it"],
+                answer: 1,
+                topic: "Acceptance",
+                explanation: "Adams v Lindsell: Acceptance is complete the moment the letter is posted, even if delayed."
+            },
+            {
+                q: "Silence __________ amount to acceptance.",
+                options: ["Does", "Does not", "Always", "Can"],
+                answer: 1,
+                topic: "Acceptance",
+                explanation: "Felthouse v Bindley: Silence cannot constitute acceptance; acceptance must be communicated."
+            },
+            {
+                q: "Acceptance is not effective until it is:",
+                options: ["Communicated to the Offeror", "Decided mentally", "Written down", "Witnessed"],
+                answer: 0,
+                topic: "Acceptance",
+                explanation: "Entores Ltd v Miles Far East Corp: Acceptance must be communicated to be effective (except for the Postal Rule)."
+            },
+            // Consideration
+            {
+                q: "Consideration is defined as the __________ paid for the promise.",
+                options: ["Tax", "Price", "Gift", "Interest"],
+                answer: 1,
+                topic: "Consideration",
+                explanation: "Consideration is the price paid for the promise of the other party (Pollock's definition)."
+            },
+            {
+                q: "Which is NOT a valid type of consideration?",
+                options: ["Executed", "Executory", "Past", "Forbearance"],
+                answer: 2,
+                topic: "Consideration",
+                explanation: "Past Consideration is generally not sufficient to support a contract (Re McArdle), with limited exceptions."
+            },
+            {
+                q: "Consideration need not be __________, but must be sufficient.",
+                options: ["Real", "Legal", "Adequate", "Move from the promisee"],
+                answer: 2,
+                topic: "Consideration",
+                explanation: "The courts do not inquire into the adequacy of consideration (value), only its sufficiency (legal validity)."
+            },
+            {
+                q: "Performance of an existing legal duty is generally:",
+                options: ["Good consideration", "Not good consideration", "Illegal", "Void"],
+                answer: 1,
+                topic: "Consideration",
+                explanation: "Collins v Godefroy: Doing what you are already legally bound to do is not sufficient consideration."
+            },
+            {
+                q: "The Rule in Pinnel's Case states that part payment of a debt is:",
+                options: ["Satisfaction of the whole", "Not satisfaction of the whole", "A gift", "Binding"],
+                answer: 1,
+                topic: "Consideration",
+                explanation: "Part payment of a debt on the due date is not satisfaction for the whole debt unless there is fresh consideration."
+            },
+            // Capacity & Intention
+            {
+                q: "Contracts for 'Necessaries' are binding on:",
+                options: ["Minors", "Aliens", "Companies", "No one"],
+                answer: 0,
+                topic: "Capacity",
+                explanation: "Minors are bound to pay a reasonable price for necessaries (goods suitable to their condition in life)."
+            },
+            {
+                q: "In domestic agreements, the presumption is that there is:",
+                options: ["An intention to create legal relations", "No intention to create legal relations", "A binding contract", "Strict liability"],
+                answer: 1,
+                topic: "Intention",
+                explanation: "Balfour v Balfour: Domestic/social agreements are presumed not to be legally binding."
+            },
+            {
+                q: "In commercial agreements, the presumption is that there is:",
+                options: ["No intention to create legal relations", "An intention to create legal relations", "Friendship", "Trust"],
+                answer: 1,
+                topic: "Intention",
+                explanation: "Edwards v Skyways: In commercial dealings, parties are presumed to intend legal consequences."
+            },
+            {
+                q: "A person of unsound mind is bound by a contract if the other party:",
+                options: ["Did not know of the insanity", "Knew of the insanity", "Was also insane", "Was a minor"],
+                answer: 0,
+                topic: "Capacity",
+                explanation: "Imperial Loan Co v Stone: A contract is binding unless the other party knew of the incapacity."
+            },
+            // Terms
+            {
+                q: "A term that goes to the root of the contract is a:",
+                options: ["Warranty", "Condition", "Innominate term", "Exclusion clause"],
+                answer: 1,
+                topic: "Terms",
+                explanation: "A Condition is a fundamental term; its breach allows the innocent party to terminate the contract."
+            },
+            {
+                q: "A term subsidiary to the main purpose of the contract is a:",
+                options: ["Condition", "Warranty", "Guarantee", "Promise"],
+                answer: 1,
+                topic: "Terms",
+                explanation: "A Warranty is a minor term; breach gives a right to damages but not termination (Bettini v Gye)."
+            },
+            {
+                q: "Terms implied by custom or usage are based on:",
+                options: ["Statute", "The Courts", "Trade practice", "The Constitution"],
+                answer: 2,
+                topic: "Terms",
+                explanation: "Hutton v Warren: Terms can be implied if they are standard custom in a particular trade."
+            },
+            {
+                q: "The 'Business Efficacy' test is used to imply terms by:",
+                options: ["Statute", "The Courts", "Custom", "The Parties"],
+                answer: 1,
+                topic: "Terms",
+                explanation: "The Moorcock: Courts imply terms necessary to give the contract business efficacy (make it work)."
+            },
+            // Vitiating Factors
+            {
+                q: "Which of the following renders a contract void ab initio?",
+                options: ["Misrepresentation", "Mistake", "Undue Influence", "Breach"],
+                answer: 1,
+                topic: "Vitiating Factors",
+                explanation: "A common mistake as to the existence of the subject matter renders the contract void from the beginning."
+            },
+            {
+                q: "A false statement of material fact inducing a contract is:",
+                options: ["Duress", "Mistake", "Misrepresentation", "Illegal"],
+                answer: 2,
+                topic: "Vitiating Factors",
+                explanation: "Misrepresentation is a false statement of fact made by one party to another, which induces them to contract."
+            },
+            {
+                q: "Duress involves the use of:",
+                options: ["Persuasion", "Illegitimate pressure/threats", "Advice", "Fraud"],
+                answer: 1,
+                topic: "Vitiating Factors",
+                explanation: "Duress is coercion or threats used to force a party into a contract against their will."
+            },
+            {
+                q: "Undue Influence is presumed in relationships like:",
+                options: ["Buyer and Seller", "Solicitor and Client", "Husband and Wife", "Employer and Employee"],
+                answer: 1,
+                topic: "Vitiating Factors",
+                explanation: "Fiduciary relationships (Solicitor/Client, Doctor/Patient) carry a presumption of Undue Influence."
+            },
+            {
+                q: "Non Est Factum allows a person to escape liability if they:",
+                options: ["Changed their mind", "Mistakenly signed a radically different document", "Made a bad deal", "Can't pay"],
+                answer: 1,
+                topic: "Vitiating Factors",
+                explanation: "Non Est Factum ('It is not my deed') applies if a person signs a document fundamentally different from what they thought."
+            },
+            {
+                q: "A contract to commit a crime is:",
+                options: ["Voidable", "Valid", "Illegal", "Unenforceable"],
+                answer: 2,
+                topic: "Illegality",
+                explanation: "Contracts to commit crimes are illegal on grounds of public policy."
+            },
+            // Discharge
+            {
+                q: "Which is NOT a method of discharging a contract?",
+                options: ["Performance", "Agreement", "Breach", "Consideration"],
+                answer: 3,
+                topic: "Discharge",
+                explanation: "Consideration is an element of formation, not a method of discharge (ending) a contract."
+            },
+            {
+                q: "Frustration occurs when an event makes performance:",
+                options: ["Expensive", "Difficult", "Impossible or radically different", "Inconvenient"],
+                answer: 2,
+                topic: "Discharge",
+                explanation: "Taylor v Caldwell: Frustration occurs when an unforeseen event makes performance impossible."
+            },
+            {
+                q: "Anticipatory Breach occurs:",
+                options: ["After the due date", "Before the due date of performance", "During performance", "Never"],
+                answer: 1,
+                topic: "Discharge",
+                explanation: "Anticipatory Breach happens when a party indicates in advance that they will not perform their obligations."
+            },
+            {
+                q: "The remedy of Specific Performance is:",
+                options: ["A right", "Discretionary", "Automatic", "Criminal"],
+                answer: 1,
+                topic: "Remedies",
+                explanation: "Specific Performance is an equitable remedy granted at the court's discretion, not as a right."
+            },
+            {
+                q: "Damages are intended to:",
+                options: ["Punish the defendant", "Reward the plaintiff", "Compensate for loss", "Enrich the state"],
+                answer: 2,
+                topic: "Remedies",
+                explanation: "The purpose of damages in contract law is compensatory: to put the innocent party in the position they would have been in."
+            },
+            // Misc
+            {
+                q: "The case of Adams v Lindsell established:",
+                options: ["The Postal Rule", "Privity of Contract", "Invitation to Treat", "Past Consideration"],
+                answer: 0,
+                topic: "Acceptance",
+                explanation: "Adams v Lindsell is the leading case for the Postal Rule of acceptance."
+            },
+            {
+                q: "The case of Carlill v Carbolic Smoke Ball Co. involved:",
+                options: ["A unilateral contract", "A bilateral contract", "A void contract", "No contract"],
+                answer: 0,
+                topic: "Offer",
+                explanation: "Mrs. Carlill accepted the offer by performing the act (using the smoke ball), making it a unilateral contract."
+            },
+            {
+                q: "Which case established that family agreements are not binding?",
+                options: ["Merritt v Merritt", "Balfour v Balfour", "Jones v Padavatton", "Simpkins v Pays"],
+                answer: 1,
+                topic: "Intention",
+                explanation: "Balfour v Balfour established the presumption against legal intent in spousal agreements."
+            },
+            {
+                q: "Which case relates to 'Invitation to Treat' involving goods on display?",
+                options: ["Partridge v Crittenden", "Fisher v Bell", "Pharmaceutical Society v Boots", "All of the above"],
+                answer: 3,
+                topic: "Offer",
+                explanation: "All these cases confirm that displaying goods or advertising them constitutes an Invitation to Treat."
+            },
+            {
+                q: "The doctrine of Privity of Contract means:",
+                options: ["Contracts are private", "Only parties to a contract can sue/be sued", "Privacy is guaranteed", "Contracts must be secret"],
+                answer: 1,
+                topic: "Privity",
+                explanation: "Dunlop v Selfridge: Only those who are party to the contract (and provided consideration) can enforce it."
+            },
+            {
+                q: "Equitable estoppel is associated with the case of:",
+                options: ["High Trees Case", "Pinnel's Case", "Foakes v Beer", "Williams v Roffey"],
+                answer: 0,
+                topic: "Consideration",
+                explanation: "Central London Property Trust v High Trees House established Promissory Estoppel."
+            },
+            {
+                q: "A contract induced by undue influence is:",
+                options: ["Void", "Voidable", "Valid", "Illegal"],
+                answer: 1,
+                topic: "Vitiating Factors",
+                explanation: "Undue influence makes a contract voidable at the option of the victim."
+            },
+            {
+                q: "Which is a remedy for innocent misrepresentation?",
+                options: ["Damages only", "Rescission", "Imprisonment", "Fine"],
+                answer: 1,
+                topic: "Remedies",
+                explanation: "Rescission (setting aside the contract) is the primary remedy for innocent misrepresentation."
+            },
+            {
+                q: "Mitigation of loss means the plaintiff must:",
+                options: ["Increase the loss", "Take reasonable steps to minimize loss", "Ignore the loss", "Sue immediately"],
+                answer: 1,
+                topic: "Remedies",
+                explanation: "The injured party has a duty to take reasonable steps to minimize the loss resulting from the breach."
+            },
+            {
+                q: "Injunction is a court order to:",
+                options: ["Pay money", "Stop doing something", "Go to jail", "Apologize"],
+                answer: 1,
+                topic: "Remedies",
+                explanation: "An injunction is an equitable remedy restraining a party from breaking a negative stipulation in a contract."
+            },
+            {
+                q: "Quantum Meruit means:",
+                options: ["As much as he has earned", "Quantity of merit", "Quality of work", "Quick money"],
+                answer: 0,
+                topic: "Remedies",
+                explanation: "It is a claim for reasonable remuneration for work done when no price was agreed."
+            },
+            {
+                q: "A void contract is:",
+                options: ["Valid until avoided", "Of no legal effect from the start", "Illegal", "Unenforceable"],
+                answer: 1,
+                topic: "Types",
+                explanation: "A void contract is a nullity from the beginning (void ab initio); it creates no legal rights or obligations."
+            },
+            {
+                q: "A voidable contract is:",
+                options: ["Valid until set aside", "Void from the start", "Illegal", "Unwritten"],
+                answer: 0,
+                topic: "Types",
+                explanation: "A voidable contract remains valid and binding unless and until the innocent party chooses to rescind it."
+            },
+            {
+                q: "Which statute governs contracts in Ghana?",
+                options: ["Contract Act, 1872", "Contracts Act, 1960 (Act 25)", "Sale of Goods Act", "Company Act"],
+                answer: 1,
+                topic: "Legislation",
+                explanation: "The Contracts Act, 1960 (Act 25) is the primary legislation governing contracts in Ghana."
+            },
+            {
+                q: "Which type of mistake renders a contract void?",
+                options: ["Unilateral Mistake (Identity)", "Common Mistake", "Mutual Mistake", "All of the above"],
+                answer: 3,
+                topic: "Mistake",
+                explanation: "Fundamental mistakes (whether common, mutual, or unilateral regarding identity) can render a contract void."
+            },
+            {
+                q: "Consideration must move from the:",
+                options: ["Promisor", "Promisee", "Third Party", "Court"],
+                answer: 1,
+                topic: "Consideration",
+                explanation: "Tweddle v Atkinson: The person who wishes to enforce the contract (Promisee) must have provided the consideration."
+            },
+            {
+                q: "Which case illustrates that 'Past Consideration is no consideration'?",
+                options: ["Roscorla v Thomas", "Re McArdle", "Lampleigh v Braithwaite", "All of the above"],
+                answer: 3,
+                topic: "Consideration",
+                explanation: "All these cases deal with the rule that consideration must not be past (acts done before the promise)."
+            },
+            {
+                q: "Exceptions to the rule of Privity include:",
+                options: ["Agency", "Trusts", "Statutory exceptions", "All of the above"],
+                answer: 3,
+                topic: "Privity",
+                explanation: "Agency, Trusts, and Statutes (like Motor Insurance) allow third parties to enforce rights despite privity."
+            },
+            {
+                q: "An agreement to keep an offer open for a specific time is called an:",
+                options: ["Option", "Invitation", "Acceptance", "Advertisement"],
+                answer: 0,
+                topic: "Offer",
+                explanation: "An Option is a separate contract to keep an offer open, usually requiring separate consideration."
+            },
+            {
+                q: "The 'Mirror Image Rule' applies to:",
+                options: ["Offer", "Acceptance", "Consideration", "Capacity"],
+                answer: 1,
+                topic: "Acceptance",
+                explanation: "Acceptance must match the offer exactly (mirror it); otherwise, it is a counter-offer."
+            },
+            {
+                q: "A contract formed by the conduct of parties is:",
+                options: ["Express", "Implied", "Written", "Void"],
+                answer: 1,
+                topic: "Types",
+                explanation: "Implied contracts are inferred from the actions and conduct of the parties rather than written or spoken words."
+            },
+            {
+                q: "Which creates a legal duty in a contract?",
+                options: ["Moral obligation", "Social promise", "Exchange of promises (Consideration)", "Hope"],
+                answer: 2,
+                topic: "Definition",
+                explanation: "The exchange of promises supported by consideration creates the legal duty enforceable by law."
+            },
+            {
+                q: "Contracts prejudicial to the administration of justice are:",
+                options: ["Valid", "Voidable", "Illegal", "Enforceable"],
+                answer: 2,
+                topic: "Illegality",
+                explanation: "Any agreement that obstructs justice (e.g., stifling a prosecution) is illegal and unenforceable."
+            },
+            {
+                q: "Self-induced frustration is:",
+                options: ["Valid frustration", "Not frustration", "Force Majeure", "Act of God"],
+                answer: 1,
+                topic: "Discharge",
+                explanation: "Frustration cannot be claimed if the event was caused by the party's own act or negligence (Maritime National Fish v Ocean Trawlers)."
+            }
+        ];
+
+        // --- Motivational Messages ---
+        const encouragements = [
+            "Justice is served! Great answer! ⚖️",
+            "You know your rights! Keep it up! 📜",
+            "Your legal mind is sharp today! 🧠",
+            "A valid point! Excellent progress! ✅",
+            "Binding and enforceable! Good job! 🤝",
+            "No objection! You're doing great! 🏛️",
+            "The verdict is in: You're crushing it! 🔨",
+            "Legally brilliant! Forward we go! 🚀",
+            "Offer accepted! Well done! 💼"
+        ];
+
+        // --- State Variables ---
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let wrongAnswers = [];
+        const totalQuestions = questions.length;
+
+        // --- DOM Elements ---
+        const startScreen = document.getElementById('start-screen');
+        const quizScreen = document.getElementById('quiz-screen');
+        const resultScreen = document.getElementById('result-screen');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackArea = document.getElementById('feedback-area');
+        const feedbackTitle = document.getElementById('feedback-title');
+        const feedbackExplanation = document.getElementById('feedback-explanation');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const topicBadge = document.getElementById('topic-badge');
+        const currentQNum = document.getElementById('current-q-num');
+        const liveScore = document.getElementById('live-score');
+        const miniProgressContainer = document.getElementById('mini-progress-container');
+        const miniProgressCircle = document.getElementById('mini-progress-circle');
+
+        // Milestone Elements
+        const milestoneModal = document.getElementById('milestone-modal');
+        const milestoneContent = document.getElementById('milestone-content');
+        const milestoneCount = document.getElementById('milestone-count');
+        const milestonePercent = document.getElementById('milestone-percent');
+        const milestoneCircle = document.getElementById('milestone-circle');
+
+        // Toast Element
+        const motivationToast = document.getElementById('motivation-toast');
+        const motivationText = document.getElementById('motivation-text');
+
+        // --- Functions ---
+
+        function startQuiz() {
+            startScreen.classList.add('hidden');
+            quizScreen.classList.remove('hidden');
+            miniProgressContainer.classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const currentQ = questions[currentQuestionIndex];
+            
+            // Reset UI
+            feedbackArea.classList.add('hidden');
+            optionsContainer.innerHTML = '';
+            
+            // Text Content
+            questionText.textContent = currentQ.q;
+            currentQNum.textContent = currentQuestionIndex + 1;
+            topicBadge.textContent = currentQ.topic;
+            
+            // Update Mini Progress Ring
+            const progressPercent = ((currentQuestionIndex) / totalQuestions) * 100;
+            const offset = 251.2 - (251.2 * progressPercent / 100);
+            miniProgressCircle.style.strokeDashoffset = offset;
+
+            // Generate Options
+            currentQ.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left p-5 rounded-xl border-2 border-emerald-200 bg-white text-slate-700 font-medium text-lg`;
+                btn.textContent = opt;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const currentQ = questions[currentQuestionIndex];
+            const buttons = optionsContainer.getElementsByTagName('button');
+            
+            // Disable all buttons
+            for(let btn of buttons) {
+                btn.disabled = true;
+                btn.classList.add('opacity-60', 'cursor-not-allowed');
+            }
+
+            const isCorrect = selectedIndex === currentQ.answer;
+
+            // Style Feedback Area
+            feedbackArea.classList.remove('hidden', 'border-red-200', 'border-green-200');
+            feedbackIcon.classList.remove('bg-red-100', 'text-red-600', 'bg-green-100', 'text-green-600');
+            feedbackTitle.classList.remove('text-red-700', 'text-green-700');
+
+            if (isCorrect) {
+                // Button Styling
+                btnElement.classList.remove('border-emerald-200', 'bg-white', 'opacity-60');
+                btnElement.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+                
+                // Feedback Styling
+                feedbackArea.classList.add('border-green-200');
+                feedbackIcon.classList.add('bg-green-100', 'text-green-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>`;
+                feedbackTitle.textContent = "Correct Ruling";
+                feedbackTitle.classList.add('text-green-700');
+                
+                score++;
+                liveScore.textContent = score;
+            } else {
+                // User's Wrong Button
+                btnElement.classList.remove('border-emerald-200', 'bg-white', 'opacity-60');
+                btnElement.classList.add('border-red-500', 'bg-red-50', 'text-red-900');
+                
+                // Correct Button Highlight
+                const correctBtn = buttons[currentQ.answer];
+                correctBtn.classList.remove('border-emerald-200', 'bg-white', 'opacity-60');
+                correctBtn.classList.add('border-green-500', 'bg-green-50', 'text-green-900', 'font-bold');
+
+                // Feedback Styling
+                feedbackArea.classList.add('border-red-200');
+                feedbackIcon.classList.add('bg-red-100', 'text-red-600');
+                feedbackIcon.innerHTML = `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+                feedbackTitle.textContent = "Incorrect Ruling";
+                feedbackTitle.classList.add('text-red-700');
+
+                // Track Wrong Answer
+                wrongAnswers.push({
+                    q: currentQ.q,
+                    userAns: currentQ.options[selectedIndex],
+                    correctAns: currentQ.options[currentQ.answer],
+                    explanation: currentQ.explanation
+                });
+            }
+
+            feedbackExplanation.textContent = currentQ.explanation;
+            
+            // Slide down animation
+            feedbackArea.classList.add('card-enter');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            // Check for Milestone (Every 10 questions)
+            if (currentQuestionIndex > 0 && currentQuestionIndex % 10 === 0 && currentQuestionIndex < totalQuestions) {
+                showMilestone();
+                return;
+            }
+
+            // Check for Motivation (Every 3 questions)
+            if (currentQuestionIndex > 0 && currentQuestionIndex % 3 === 0) {
+                showMotivation();
+            }
+
+            if (currentQuestionIndex < totalQuestions) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showMotivation() {
+            const msg = encouragements[Math.floor(Math.random() * encouragements.length)];
+            motivationText.textContent = msg;
+            motivationToast.classList.remove('hidden');
+            motivationToast.classList.add('toast-enter');
+            
+            setTimeout(() => {
+                motivationToast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function showMilestone() {
+            quizScreen.classList.add('blur-sm');
+            milestoneModal.classList.remove('hidden');
+            // Trigger Fade In
+            setTimeout(() => {
+                milestoneModal.classList.remove('opacity-0');
+                document.getElementById('milestone-content').classList.remove('scale-95');
+                document.getElementById('milestone-content').classList.add('scale-100');
+            }, 10);
+
+            // Update Data
+            const percent = Math.round((score / currentQuestionIndex) * 100);
+            milestoneCount.textContent = currentQuestionIndex;
+            milestonePercent.textContent = `${percent}%`;
+
+            // Animate Circle
+            // Radius 58 => Circumference ~364
+            const offset = 364 - (364 * percent / 100);
+            setTimeout(() => {
+                milestoneCircle.style.strokeDashoffset = offset;
+            }, 300);
+        }
+
+        function closeMilestone() {
+            milestoneModal.classList.add('opacity-0');
+            setTimeout(() => {
+                milestoneModal.classList.add('hidden');
+                quizScreen.classList.remove('blur-sm');
+                loadQuestion();
+            }, 300);
+        }
+
+        function showResults() {
+            quizScreen.classList.add('hidden');
+            miniProgressContainer.classList.add('hidden');
+            resultScreen.classList.remove('hidden');
+
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Animate Final Score Circle
+            // Radius 70 => Circumference ~439.8
+            const circle = document.getElementById('final-score-circle');
+            const offset = 439.8 - (439.8 * percentage / 100);
+            
+            setTimeout(() => {
+                circle.style.transition = 'stroke-dashoffset 1.5s ease-out';
+                circle.style.strokeDashoffset = offset;
+            }, 500);
+
+            document.getElementById('final-percentage').textContent = `${percentage}%`;
+            document.getElementById('final-correct').textContent = score;
+            document.getElementById('final-wrong').textContent = wrongAnswers.length;
+            document.getElementById('final-total').textContent = `${score} pts`;
+
+            // Populate Review Section if there are errors
+            const reviewBtn = document.getElementById('review-btn');
+            const reviewList = document.getElementById('review-list');
+            reviewList.innerHTML = '';
+
+            if (wrongAnswers.length > 0) {
+                reviewBtn.classList.remove('hidden');
+                wrongAnswers.forEach((item, i) => {
+                    const div = document.createElement('div');
+                    div.className = "bg-white p-4 rounded-lg border border-emerald-200 shadow-sm";
+                    div.innerHTML = `
+                        <p class="font-bold text-slate-800 text-sm mb-2">${i+1}. ${item.q}</p>
+                        <div class="flex flex-col gap-2 text-sm">
+                            <div class="flex items-center gap-2 text-red-600 bg-red-50 p-2 rounded">
+                                <span class="font-bold">✘ You:</span> ${item.userAns}
+                            </div>
+                            <div class="flex items-center gap-2 text-green-700 bg-green-50 p-2 rounded">
+                                <span class="font-bold">✔ Correct:</span> ${item.correctAns}
+                            </div>
+                            <div class="text-slate-500 italic mt-1 pl-2 border-l-2 border-emerald-200">
+                                💡 ${item.explanation}
+                            </div>
+                        </div>
+                    `;
+                    reviewList.appendChild(div);
+                });
+            }
+        }
+
+        function toggleReview() {
+            const container = document.getElementById('review-container');
+            container.classList.toggle('hidden');
+            // smooth scroll to review
+            if(!container.classList.contains('hidden')) {
+                container.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+    </script>
+</body>
+</html>
